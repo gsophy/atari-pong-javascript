@@ -25,3 +25,58 @@ const ball = {
     speed: 7,
     color: "WHITE"
 }
+
+//User Paddle
+const user = {
+    x: 0, //left side of the canvas
+    y: (canvas.height - 100)/2, //-100 is the height of the paddle
+    width: 10,
+    height: 100,
+    score: 0,
+    color: "WHITE"
+}
+
+//Computer Paddle
+const com = {
+    x: canvas.width - 10, //-10 is the width of the paddle
+    y: (canvas.height - 100)/2, //-100 is the height of the paddle
+    width: 10,
+    height: 100,
+    score: 0,
+    color: "WHITE"
+}
+
+//NET
+const net  = {
+    x: (canvas.width -2)/2,
+    y: 0,
+    height: 10,
+    width: 2,
+    color: "WHITE"
+}
+
+// draw a rectangle, will be used to draw paddles
+function drawRect (x, y, w, h, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h)
+}
+
+//draw circle, will be used to draw the ball
+function drawArc (x, y, r, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+}
+
+//listening to the mouse
+canvas.addEventListener("mousemove", getMousePos);
+
+function getMousePos(evt) {
+    let rect = canvas.getBoundingClientRect();
+
+    user.y = evt.clientY - rect.top - user.height/2;
+}
+
+//when COM or User Scores, we will reset the ball
