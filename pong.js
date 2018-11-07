@@ -163,6 +163,46 @@ collidePoint = collidePoint / (player.height/2);
 //Math.PI/4 = 45 degree angle
 let angleRad = (Math.PI/4) * collidePoint
 
+//change the X and Y velocity direction
+    let direction = (ball.x + ball.radius <canvas.width/2) ? 1 : -1;
+    ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+    ball.velocityY = ball.speed * Math.sin(angleRad);
+
+    //speed up the ball everytime a paddle hits it
+        ball.speed += 0.1;
         }
 }
 
+//render function, the function that does all the drawing
+function render () {
+
+    //clear the canvas
+    drawRect (0,0, canvas.width, canvas.height, "#000");
+
+    //draw the user score to the left
+    drawText(user.score, canvas.width/4, canvas.height/5);
+
+    //draw the COM score to the right
+    drawText(com.score, 3*canvas.width/4, canvas.height/5);
+
+    //draw the net
+    drawNet();
+
+    //draw the user's paddle
+    drawRect(user.x, user.y, user.width, user.height, user.color);
+
+    //draw the Computer's paddle
+    drawRect(com.x, com.y, com, width, com.height, com.color);
+
+    //draw the ball
+    drawArc(ball.x, ball.y, ball.radius, ball.color);
+}
+function game () {
+    update ();
+    render ();
+}
+//number of frames per second
+let framesPerSecond = 50;
+
+//call the game function 50 times every 1 second
+let loop = setInterval(game, 1000/framesPerSecond);
